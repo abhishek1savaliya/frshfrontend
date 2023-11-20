@@ -9,7 +9,7 @@ const Signup = (props) => {
 
    const {name,email,password} = credentias;
 
-    const response = await fetch(`https://freshbackend.onrender.com/api/auth/createuser`, {
+    const response = await fetch(`https://anotebookbackend.onrender.com/api/auth/createuser`, {
         method: "POST",
         headers: {
           "Content-Type": "application/json", 
@@ -33,11 +33,6 @@ const Signup = (props) => {
 const onChange = (e) => {
   setCredentias({ ...credentias, [e.target.name]: e.target.value });
 };
-
-
-
-
-
 
   return (
     <div className='container mt-3'>
