@@ -14,29 +14,29 @@ const Noteitem = (props) => {
         <p className="text-gray-700">{note.description}</p>
 
         <div className="mt-3">
-        <button
-          className="text-gray-700 hover:text-gray-900 transition duration-300 ease-in-out"
-          onClick={() => {
-            updateNote(note);
-          }}
-        >
-          <FaRegEdit className="text-lg" />
+          <button
+            className="text-gray-700 hover:text-gray-900 transition duration-300 ease-in-out"
+            onClick={() => {
+              updateNote(note);
+            }}
+          >
+            <FaRegEdit className="text-lg" />
 
-        </button>
+          </button>
 
-        <button
-          className="text-gray-700 hover:text-red-500 mx-3 transition duration-300 ease-in-out"
-          onClick={() => {
-            deleteNote(note._id);
-            props.showAlert("Deleted Successfully", "danger");
-          }}
-        >
-          
-          <i className="far fa-trash-alt"></i>
-        </button>
+          <button
+            className="text-gray-700 hover:text-red-500 mx-3 transition duration-300 ease-in-out"
+            onClick={() => {
+              deleteNote(note._id);
+              props.showAlert("Deleted Successfully", "danger");
+            }}
+          >
+
+            <i className="far fa-trash-alt"></i>
+          </button>
         </div>
 
-  
+
       </div>
     </div>
   );

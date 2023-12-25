@@ -49,7 +49,6 @@ const Login = (props) => {
         setLoading(false);
       }
     } catch (error) {
-      console.error('Error occurred:', error);
       props.showAlert('Error occurred while logging in', 'danger');
       setLoading(false);
     }

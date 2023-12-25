@@ -20,7 +20,7 @@ const Profile = () => {
                     <p className="text-pink-900">Surat</p>
                 </div>
 
-                <div className="space-y-2  text-gray-700 ransform transition-transform duration-300 hover:scale-125">
+                <div className="space-y-2 text-gray-700 ransform transition-transform duration-300 hover:scale-125">
                     <p><strong>Email:</strong> <a href="mailto:abhisheksavaliya555@gmail.com" className="text-blue-500 hover:text-blue-700">abhisheksavaliya555@gmail.com</a></p>
                     <p><strong>Phone:</strong> 8160059914</p>
                     <p><strong>LinkedIn:</strong> <Link to="https://linkedin.com/in/abhishek-savaliya-22547b200" target="_blank" className="text-blue-500 hover:text-blue-700">Abhishek Savaliya</Link></p>

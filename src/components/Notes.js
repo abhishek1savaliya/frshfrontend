@@ -116,8 +116,8 @@ function Notes(props) {
         <div className="container text-danger display-6">
           {notes.length === 0 ? 'Empty notes !' : ''}
         </div>
-        {notes.map((note) => {
-          return <Noteitem note={note} updateNote={updateNote} showAlert={props.showAlert} />;
+        {notes.map((note,id) => {
+          return <Noteitem note={note} key={id}  updateNote={updateNote} showAlert={props.showAlert} />;
         })}
       </div>
     </>
