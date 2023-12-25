@@ -2,13 +2,16 @@ import React, { useState } from 'react'
 import { useNavigate } from "react-router-dom";
 
 import axios from 'axios';
+import { DNA } from 'react-loader-spinner';
 
 
 const Login = (props) => {
+  const navigate = useNavigate();
   const [credentials, setCredentials] = useState({ email: "", password: "" })
-  let navigate = useNavigate();
+  const [loading, setLoading] = useState(false)
   const handleSubmit = async (e) => {
     e.preventDefault();
+    setLoading(true)
 
     try {
       const response = await axios.post('https://anotebookbackend.onrender.com/api/auth/login', {
@@ -25,9 +28,11 @@ const Login = (props) => {
       if (data.success) {
         localStorage.setItem('token', data.authToken);
         props.showAlert('Logged in Success', 'success');
+        setLoading(true)
         navigate('/');
       } else {
         props.showAlert('Invalid Credentials', 'danger');
+        setLoading(false)
       }
     } catch (error) {
       // Handle errors if any
@@ -54,8 +59,21 @@ const Login = (props) => {
           <label htmlFor="password" className="form-label">Password</label>
           <input type="password" className="form-control" onChange={onChange} value={credentials.password} name="password" id="password" />
         </div>
+        <button type="submit" className={loading ? "btn" : "btn btn-success"}>
+          {
+            loading ?
+              <DNA
+                visible={true}
+                height="80"
+                width="80"
+                ariaLabel="dna-loading"
+                wrapperStyle={{}}
+                wrapperClass="dna-wrapper"
+              /> : 'Login'
+          }
+        </button>
 
-        <button type="submit" className="btn btn-danger" >Login</button>
+
       </form>
 
 
