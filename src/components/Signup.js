@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { DNA } from 'react-loader-spinner';
 import { useNavigate } from "react-router-dom";
 
@@ -6,6 +6,14 @@ const Signup = (props) => {
   const [credentials, setCredentials] = useState({ name: "", email: "", password: "", cpassword: "" });
   const [loading, setLoading] = useState(false);
   const navigate = useNavigate();
+
+  const token = localStorage.getItem('token');
+
+  useEffect(() => {
+    if (token) {
+      navigate('/');
+    }
+  }, [])
 
   const handleSubmit = async (e) => {
     e.preventDefault();

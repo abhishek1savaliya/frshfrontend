@@ -1,5 +1,6 @@
 import React, { useContext } from "react";
 import noteContext from "../context/NoteContext";
+import { FaRegEdit } from "react-icons/fa";
 
 const Noteitem = (props) => {
   const context = useContext(noteContext);
@@ -12,13 +13,15 @@ const Noteitem = (props) => {
         <h5 className="text-red-500 text-lg mb-2">{note.title}</h5>
         <p className="text-gray-700">{note.description}</p>
 
+        <div className="mt-3">
         <button
           className="text-gray-700 hover:text-gray-900 transition duration-300 ease-in-out"
           onClick={() => {
             updateNote(note);
           }}
         >
-          <i className="far fa-pen-square"></i>
+          <FaRegEdit className="text-lg" />
+
         </button>
 
         <button
@@ -28,8 +31,12 @@ const Noteitem = (props) => {
             props.showAlert("Deleted Successfully", "danger");
           }}
         >
+          
           <i className="far fa-trash-alt"></i>
         </button>
+        </div>
+
+  
       </div>
     </div>
   );

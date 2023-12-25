@@ -1,6 +1,15 @@
-import React from 'react';
+import React, { useEffect } from 'react';
+import { useNavigate } from "react-router-dom";
 
 function About() {
+  const navigate = useNavigate();
+  const token = localStorage.getItem('token');
+
+  useEffect(() => {
+    if (!token) {
+      navigate('/login');
+    }
+  }, [])
   return (
     <div className="text-center">
       <h1 className="text-red-500 text-5xl font-bold mb-5">

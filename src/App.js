@@ -8,31 +8,33 @@ import { BrowserRouter, Routes, Route } from "react-router-dom";
 import Signup from "./components/Signup";
 import Login from "./components/Login";
 import { useState } from "react";
+import Profile from "./components/Profile";
 
 function App() {
-  const [alert,setAlert] = useState(null);
+  const [alert, setAlert] = useState(null);
 
-  const showAlert = (message,type)=>{
+  const showAlert = (message, type) => {
     setAlert({
       msg: message,
-      type:type,
+      type: type,
     })
-    setTimeout(()=>{
+    setTimeout(() => {
       setAlert(null);
-    },2000);
+    }, 2000);
   }
   return (
     <>
       <NoteState>
         <BrowserRouter>
           <Navbar />
-          <Alert alert={alert}/>
+          <Alert alert={alert} />
           <div className="container">
             <Routes>
-              <Route path="/" element={<Home showAlert={showAlert}/>}></Route>
+              <Route path="/" element={<Home showAlert={showAlert} />}></Route>
               <Route path="/about" element={<About />}></Route>
               <Route path="/login" element={<Login showAlert={showAlert} />}></Route>
-              <Route path="/signup" element={<Signup showAlert={showAlert}/>}></Route>
+              <Route path="/signup" element={<Signup showAlert={showAlert} />}></Route>
+              <Route path="/profile" element={<Profile />}></Route>
             </Routes>
           </div>
         </BrowserRouter>

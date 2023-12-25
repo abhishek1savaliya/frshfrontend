@@ -45,29 +45,36 @@ function Navbar() {
             </button>
           </div>
 
-       
-          <div className="hidden sm:block sm:ml-6">
-            <div className="flex space-x-4">
-              <Link
-                to="/"
-                className={`text-white px-3 py-2 rounded-md text-sm font-medium ${
-                  location.pathname === '/' ? 'bg-gray-900' : ''
-                }`}
-              >
-                Home
-              </Link>
-              <Link
-                to="/about"
-                className={`text-white px-3 py-2 rounded-md text-sm font-medium ${
-                  location.pathname === '/about' ? 'bg-gray-900' : ''
-                }`}
-              >
-                About
-              </Link>
+          {localStorage.getItem('token') && (
+            <div className="hidden sm:block sm:ml-6">
+              <div className="flex space-x-4">
+                <Link
+                  to="/"
+                  className={`text-white px-3 py-2 rounded-md text-sm font-medium ${location.pathname === '/' ? 'bg-gray-900' : ''
+                    }`}
+                >
+                  Home
+                </Link>
+                <Link
+                  to="/about"
+                  className={`text-white px-3 py-2 rounded-md text-sm font-medium ${location.pathname === '/about' ? 'bg-gray-900' : ''
+                    }`}
+                >
+                  About
+                </Link>
+              </div>
             </div>
-          </div>
+          )}
 
-          {/* Auth Buttons */}
+          <Link
+            to="/profile"
+            className={`text-white px-3 py-2 rounded-md text-sm font-medium text-white px-3 py-2 rounded-md text-sm font-medium btn border ${location.pathname === '/profile' ? 'bg-gray-900' : ''
+              }`}
+          >
+            Profile
+          </Link>
+
+
           {localStorage.getItem('token') ? (
             <button
               onClick={handleLogout}
@@ -97,6 +104,7 @@ function Navbar() {
       </div>
     </nav>
   );
+
 }
 
 export default Navbar;

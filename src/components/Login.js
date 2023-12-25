@@ -1,19 +1,18 @@
-import React, { useContext, useEffect, useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import axios from 'axios';
 import { DNA } from 'react-loader-spinner';
-import noteContext from '../context/NoteContext';
 
 const Login = (props) => {
   const navigate = useNavigate();
 
   const token = localStorage.getItem('token');
 
-  useEffect(()=>{
-    if(token){
+  useEffect(() => {
+    if (token) {
       navigate('/');
     }
-  },[])
+  }, [])
 
   const [credentials, setCredentials] = useState({ email: '', password: '' });
   const [loading, setLoading] = useState(false);
