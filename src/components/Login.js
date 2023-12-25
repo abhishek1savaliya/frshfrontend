@@ -1,67 +1,84 @@
-import React, { useState } from 'react'
-import { useNavigate } from "react-router-dom";
-
+import React, { useState } from 'react';
+import { useNavigate } from 'react-router-dom';
 import axios from 'axios';
 import { DNA } from 'react-loader-spinner';
 
-
 const Login = (props) => {
   const navigate = useNavigate();
-  const [credentials, setCredentials] = useState({ email: "", password: "" })
-  const [loading, setLoading] = useState(false)
+  const [credentials, setCredentials] = useState({ email: '', password: '' });
+  const [loading, setLoading] = useState(false);
+
   const handleSubmit = async (e) => {
     e.preventDefault();
-    setLoading(true)
+    setLoading(true);
 
     try {
-      const response = await axios.post('https://anotebookbackend.onrender.com/api/auth/login', {
-        email: credentials.email,
-        password: credentials.password
-      }, {
-        headers: {
-          'Content-Type': 'application/json'
+      const response = await axios.post(
+        'https://anotebookbackend.onrender.com/api/auth/login',
+        {
+          email: credentials.email,
+          password: credentials.password,
+        },
+        {
+          headers: {
+            'Content-Type': 'application/json',
+          },
         }
-      });
+      );
 
       const { data } = response;
 
       if (data.success) {
         localStorage.setItem('token', data.authToken);
         props.showAlert('Logged in Success', 'success');
-        setLoading(true)
+        setLoading(false);
         navigate('/');
       } else {
         props.showAlert('Invalid Credentials', 'danger');
-        setLoading(false)
+        setLoading(false);
       }
     } catch (error) {
-      // Handle errors if any
       console.error('Error occurred:', error);
       props.showAlert('Error occurred while logging in', 'danger');
+      setLoading(false);
     }
   };
-
 
   const onChange = (e) => {
     setCredentials({ ...credentials, [e.target.name]: e.target.value });
   };
 
   return (
-    <div className='container mt-5'>
-      <h2>Login to Continue to <span className='text-danger'>Abhishek</span>  Notebook</h2>
-      <form onSubmit={handleSubmit}>
-        <div className="mb-3">
-          <label htmlFor="email" className="form-label">Email address</label>
-          <input type="email" className="form-control" onChange={onChange} value={credentials.email} id="email" name="email" aria-describedby="emailHelp" />
-          <div id="emailHelp" className="form-text">We'll never share your email with anyone else.</div>
-        </div>
-        <div className="mb-3">
-          <label htmlFor="password" className="form-label">Password</label>
-          <input type="password" className="form-control" onChange={onChange} value={credentials.password} name="password" id="password" />
-        </div>
-        <button type="submit" className={loading ? "btn" : "btn btn-success"}>
-          {
-            loading ?
+    <div className="mt-3 flex items-center justify-center bg-gray-100">
+      <div className="bg-white p-8 rounded-lg shadow-md w-96">
+        <h2 className="text-xl mb-4">Login to Continue to <span className='text-red-500'>Abhishek</span> Notebook</h2>
+        <form onSubmit={handleSubmit}>
+          <div className="mb-4">
+            <label htmlFor="email" className="block text-sm font-medium text-gray-600">Email address</label>
+            <input
+              type="email"
+              onChange={onChange}
+              value={credentials.email}
+              id="email"
+              name="email"
+              className="mt-1 p-2 w-full border rounded-md"
+              aria-describedby="emailHelp"
+            />
+            <p className="mt-2 text-sm text-gray-500" id="emailHelp">We'll never share your email with anyone else.</p>
+          </div>
+          <div className="mb-4">
+            <label htmlFor="password" className="block text-sm font-medium text-gray-600">Password</label>
+            <input
+              type="password"
+              onChange={onChange}
+              value={credentials.password}
+              name="password"
+              id="password"
+              className="mt-1 p-2 w-full border rounded-md"
+            />
+          </div>
+          <button type="submit" className={loading ? "btn" : "btn bg-pink-500 text-white"}>
+            {loading ? (
               <DNA
                 visible={true}
                 height="80"
@@ -69,16 +86,15 @@ const Login = (props) => {
                 ariaLabel="dna-loading"
                 wrapperStyle={{}}
                 wrapperClass="dna-wrapper"
-              /> : 'Login'
-          }
-        </button>
-
-
-      </form>
-
-
+              />
+            ) : (
+              'Login'
+            )}
+          </button>
+        </form>
+      </div>
     </div>
-  )
-}
+  );
+};
 
-export default Login
+export default Login;
