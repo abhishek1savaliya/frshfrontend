@@ -1,12 +1,24 @@
-import React, { useState } from 'react';
+import React, { useContext, useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import axios from 'axios';
 import { DNA } from 'react-loader-spinner';
+import noteContext from '../context/NoteContext';
 
 const Login = (props) => {
   const navigate = useNavigate();
+
+  const token = localStorage.getItem('token');
+
+  useEffect(()=>{
+    if(token){
+      navigate('/');
+    }
+  },[])
+
   const [credentials, setCredentials] = useState({ email: '', password: '' });
   const [loading, setLoading] = useState(false);
+
+
 
   const handleSubmit = async (e) => {
     e.preventDefault();
@@ -77,7 +89,7 @@ const Login = (props) => {
               className="mt-1 p-2 w-full border rounded-md"
             />
           </div>
-          <button type="submit" className={loading ? "btn" : "btn bg-pink-500 text-white"}>
+          <button type="submit" className={loading ? "" : "bg-pink-500 hover:bg-pink-700 text-white font-bold py-2 px-4 rounded"}>
             {loading ? (
               <DNA
                 visible={true}
