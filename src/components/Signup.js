@@ -61,7 +61,7 @@ const Signup = (props) => {
           <label htmlFor="cpassword" className="form-label">Confirm Password</label>
           <input type="password" className="form-control" name="cpassword" minLength="5" required onChange={onChange} />
         </div>
-        <button type="submit" className={loading ? "btn" : "btn btn-success"}>
+        <button type="submit" className={loading ? "" : "bg-green-700 hover:bg-green-900 text-white font-bold py-2 px-4 rounded"}>
           {loading ? (
             <DNA
               visible={true}
