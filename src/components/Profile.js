@@ -27,10 +27,10 @@ const Profile = () => {
                     <p><strong>Github:</strong> <Link to="https://github.com/abhishek1savaliya" target="_blank" className="text-blue-500 hover:text-blue-700">abhishek1savaliya</Link></p>
                 </div>
 
-                <div className="border-t pt-4 ransform transition-transform duration-300 hover:scale-125">
+                {/* <div className="border-t pt-4 ransform transition-transform duration-300 hover:scale-125">
                     <h2 className="text-xl font-semibold text-purple-600">Objective</h2>
                     <p className="text-gray-700">Seeking for an internship/job opportunity with a company that offers a positive atmosphere to implement new ideas or technological skills for the betterment of the organization.</p>
-                </div>
+                </div> */}
 
                 <div className="border-t pt-4 ransform transition-transform duration-300 hover:scale-125">
                     <h2 className="text-xl font-semibold text-green-600">Technical Skills</h2>
@@ -44,14 +44,14 @@ const Profile = () => {
                     </ul>
                 </div>
 
-                <div className="border-t pt-4 ransform transition-transform duration-300 hover:scale-125">
+                {/* <div className="border-t pt-4 ransform transition-transform duration-300 hover:scale-125">
                     <h2 className="text-xl font-semibold text-indigo-600">Soft Skills</h2>
                     <ul className="list-disc list-inside">
                         <li>Leadership</li>
                         <li>Management Skill</li>
                         <li>Problem Solving</li>
                     </ul>
-                </div>
+                </div> */}
 
                 <div className="border-t pt-4 ransform transition-transform duration-300 hover:scale-125">
                     <h2 className="text-xl font-semibold text-yellow-600">Academic Background</h2>
