@@ -3,8 +3,7 @@ import { useState } from "react";
 
 const NoteState = (props) => {
   const host = "https://anotebookbackend.onrender.com";
-  const notesInitials = [];
-  const [notes, setNotes] = useState(notesInitials);
+  const [notes, setNotes] = useState([]);
 
   const getNotes = async () => {
   

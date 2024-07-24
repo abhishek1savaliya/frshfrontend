@@ -111,15 +111,24 @@ function Notes(props) {
           </div>
         </div>
       </div>
-      <div className="container row my-3 ">
+      <div className="container row my-3">
         <h2>Your Notes</h2>
-        <div className="container text-danger display-6">
-          {notes.length === 0 ? 'Empty notes !' : ''}
-        </div>
-        {notes.map((note,id) => {
-          return <Noteitem note={note} key={id}  updateNote={updateNote} showAlert={props.showAlert} />;
-        })}
+        {notes.length === 0 ? (
+          <div className="container text-danger display-6">
+            Empty notes!
+          </div>
+        ) : (
+          notes.map((note, id) => (
+            <Noteitem
+              note={note}
+              key={note.id || id} 
+              updateNote={updateNote}
+              showAlert={props.showAlert}
+            />
+          ))
+        )}
       </div>
+
     </>
   );
 }
