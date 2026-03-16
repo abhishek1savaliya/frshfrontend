@@ -1,9 +1,10 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { Link, useLocation, useNavigate } from 'react-router-dom';
 
 function Navbar() {
-  let location = useLocation();
-  let navigate = useNavigate();
+  const location = useLocation();
+  const navigate = useNavigate();
+  const [menuOpen, setMenuOpen] = useState(false);
 
   const handleLogout = () => {
     localStorage.removeItem('token');
@@ -12,99 +13,144 @@ function Navbar() {
 
   return (
     <nav className="bg-gray-800">
-      <div className="max-w-7xl mx-auto px-2 sm:px-6 lg:px-8">
-        <div className="relative flex items-center justify-between h-16">
+      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
 
-          <Link to="/" className="text-white text-xl ml-2 font-semibold">
+        <div className="flex items-center justify-between h-16">
+
+          {/* Logo */}
+          <Link to="/" className="text-white text-xl font-semibold">
             aNotebook
           </Link>
 
-          <div className="absolute inset-y-0 right-0 flex items-center sm:hidden">
-            <button
-              type="button"
-              className="inline-flex items-center justify-center p-2 rounded-md text-white hover:text-white hover:bg-gray-700 focus:outline-none focus:ring-2 focus:ring-inset focus:ring-white"
-              aria-controls="mobile-menu"
-              aria-expanded="false"
-            >
-              <span className="sr-only">Open main menu</span>
-              <svg
-                className="block h-6 w-6"
-                xmlns="http://www.w3.org/2000/svg"
-                fill="none"
-                viewBox="0 0 24 24"
-                stroke="currentColor"
-                aria-hidden="true"
-              >
-                <path
-                  strokeLinecap="round"
-                  strokeLinejoin="round"
-                  strokeWidth="2"
-                  d="M4 6h16M4 12h16M4 18h16"
-                />
-              </svg>
-            </button>
-          </div>
-
+          {/* Desktop Menu */}
           {localStorage.getItem('token') && (
-            <div className="hidden sm:block sm:ml-6">
-              <div className="flex space-x-4">
-                <Link
-                  to="/"
-                  className={`text-white px-3 py-2 rounded-md text-sm font-medium ${location.pathname === '/' ? 'bg-gray-900' : ''
-                    }`}
-                >
-                  Home
-                </Link>
-                <Link
-                  to="/about"
-                  className={`text-white px-3 py-2 rounded-md text-sm font-medium ${location.pathname === '/about' ? 'bg-gray-900' : ''
-                    }`}
-                >
-                  About
-                </Link>
-              </div>
+            <div className="hidden md:flex space-x-4">
+              <Link
+                to="/"
+                className={`text-white px-3 py-2 rounded-md text-sm font-medium ${
+                  location.pathname === '/' ? 'bg-gray-900' : ''
+                }`}
+              >
+                Home
+              </Link>
+
+              <Link
+                to="/about"
+                className={`text-white px-3 py-2 rounded-md text-sm font-medium ${
+                  location.pathname === '/about' ? 'bg-gray-900' : ''
+                }`}
+              >
+                About
+              </Link>
             </div>
           )}
 
-          <Link
-            to="/profile"
-            className={`text-white px-3 py-2 rounded-md text-sm font-medium text-white px-3 py-2 rounded-md text-sm font-medium btn border ${location.pathname === '/profile' ? 'bg-gray-900' : ''
+          {/* Right side buttons */}
+          <div className="hidden md:flex items-center space-x-3">
+
+            <Link
+              to="/profile"
+              className={`text-white px-3 py-2 rounded-md text-sm border ${
+                location.pathname === '/profile' ? 'bg-gray-900' : ''
               }`}
-          >
-            Profile
-          </Link>
-
-
-          {localStorage.getItem('token') ? (
-            <button
-              onClick={handleLogout}
-              className="ml-4 inline-flex items-center px-4 py-2 border border-transparent text-sm font-medium rounded-md text-white bg-indigo-600 hover:bg-indigo-700"
             >
-              Logout
-            </button>
-          ) : (
-            <div className="hidden sm:block">
-              <div className="flex space-x-4">
+              Profile
+            </Link>
+
+            {localStorage.getItem('token') ? (
+              <button
+                onClick={handleLogout}
+                className="px-4 py-2 text-sm rounded-md text-white bg-indigo-600 hover:bg-indigo-700"
+              >
+                Logout
+              </button>
+            ) : (
+              <>
                 <Link
                   to="/login"
-                  className="text-white px-3 py-2 rounded-md text-sm font-medium hover:bg-gray-700"
+                  className="text-white px-3 py-2 rounded-md text-sm hover:bg-gray-700"
                 >
                   Login
                 </Link>
                 <Link
                   to="/signup"
-                  className="text-white px-3 py-2 rounded-md text-sm font-medium hover:bg-gray-700"
+                  className="text-white px-3 py-2 rounded-md text-sm hover:bg-gray-700"
                 >
                   Signup
                 </Link>
-              </div>
-            </div>
-          )}
+              </>
+            )}
+          </div>
+
+          {/* Mobile menu button */}
+          <div className="md:hidden">
+            <button
+              onClick={() => setMenuOpen(!menuOpen)}
+              className="text-white p-2 rounded-md hover:bg-gray-700"
+            >
+              ☰
+            </button>
+          </div>
         </div>
       </div>
+
+      {/* Mobile Menu */}
+      {menuOpen && (
+        <div className="md:hidden px-4 pb-3 space-y-2">
+
+          {localStorage.getItem('token') && (
+            <>
+              <Link
+                to="/"
+                className="block text-white px-3 py-2 rounded-md hover:bg-gray-700"
+              >
+                Home
+              </Link>
+
+              <Link
+                to="/about"
+                className="block text-white px-3 py-2 rounded-md hover:bg-gray-700"
+              >
+                About
+              </Link>
+            </>
+          )}
+
+          <Link
+            to="/profile"
+            className="block text-white px-3 py-2 rounded-md hover:bg-gray-700"
+          >
+            Profile
+          </Link>
+
+          {localStorage.getItem('token') ? (
+            <button
+              onClick={handleLogout}
+              className="w-full text-left px-3 py-2 rounded-md text-white bg-indigo-600 hover:bg-indigo-700"
+            >
+              Logout
+            </button>
+          ) : (
+            <>
+              <Link
+                to="/login"
+                className="block text-white px-3 py-2 rounded-md hover:bg-gray-700"
+              >
+                Login
+              </Link>
+
+              <Link
+                to="/signup"
+                className="block text-white px-3 py-2 rounded-md hover:bg-gray-700"
+              >
+                Signup
+              </Link>
+            </>
+          )}
+        </div>
+      )}
     </nav>
   );
-
 }
 
 export default Navbar;
