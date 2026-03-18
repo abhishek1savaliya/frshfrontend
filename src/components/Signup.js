@@ -1,5 +1,5 @@
-import React, { useEffect, useState } from 'react';
-import { DNA } from 'react-loader-spinner';
+import React, { useEffect, useState } from "react";
+import { DNA } from "react-loader-spinner";
 import { useNavigate } from "react-router-dom";
 
 const Signup = (props) => {
@@ -7,25 +7,23 @@ const Signup = (props) => {
     name: "",
     email: "",
     password: "",
-    cpassword: ""
+    cpassword: "",
   });
 
   const [loading, setLoading] = useState(false);
   const navigate = useNavigate();
 
-  // ✅ Redirect if already logged in
   useEffect(() => {
-    if (localStorage.getItem('token')) {
-      navigate('/');
+    if (localStorage.getItem("token")) {
+      navigate("/");
     }
-  }, [navigate]); // ✅ FIXED
+  }, [navigate]);
 
   const handleSubmit = async (e) => {
     e.preventDefault();
 
-    // ✅ Password validation
     if (credentials.password !== credentials.cpassword) {
-      props.showAlert("Passwords do not match", "danger");
+      props.showAlert("Passwords do not match", "error");
       return;
     }
 
@@ -35,7 +33,7 @@ const Signup = (props) => {
       const { name, email, password } = credentials;
 
       const response = await fetch(
-        `https://anotebookbackend.onrender.com/api/auth/createuser`,
+        "https://anotebookbackend.onrender.com/api/auth/createuser",
         {
           method: "POST",
           headers: {
@@ -48,16 +46,16 @@ const Signup = (props) => {
       const json = await response.json();
 
       if (json.success) {
-        localStorage.setItem('token', json.authToken);
+        localStorage.setItem("token", json.authToken);
         props.showAlert("Account Created Successfully", "success");
         navigate("/login");
       } else {
-        props.showAlert("Invalid Credentials", "danger");
+        props.showAlert("Invalid Credentials", "error");
       }
     } catch (error) {
-      props.showAlert("Error occurred during signup", "danger");
+      props.showAlert("Signup failed. Try again.", "error");
     } finally {
-      setLoading(false); // ✅ cleaner
+      setLoading(false);
     }
   };
 
@@ -66,41 +64,106 @@ const Signup = (props) => {
   };
 
   return (
-    <div className='container mt-3'>
-      <h1 className='my-5'>Signup to Abhishek Notebook</h1>
-      <form onSubmit={handleSubmit}>
-        <div className="mb-3">
-          <label htmlFor="name" className="form-label">Name</label>
-          <input type="text" className="form-control" id="name" name="name" required onChange={onChange} />
-        </div>
-        <div className="mb-3">
-          <label htmlFor="email" className="form-label">Email address</label>
-          <input type="email" className="form-control" id="email" name="email" required onChange={onChange} />
-          <div id="emailHelp" className="form-text">We'll never share your email with anyone else.</div>
-        </div>
-        <div className="mb-3">
-          <label htmlFor="password" className="form-label">Password</label>
-          <input type="password" className="form-control" name="password" minLength="5" required onChange={onChange} />
-        </div>
-        <div className="mb-3">
-          <label htmlFor="cpassword" className="form-label">Confirm Password</label>
-          <input type="password" className="form-control" name="cpassword" minLength="5" required onChange={onChange} />
-        </div>
-        <button type="submit" className={loading ? "" : "bg-green-700 hover:bg-green-900 text-white font-bold py-2 px-4 rounded"}>
-          {loading ? (
-            <DNA
-              visible={true}
-              height="80"
-              width="80"
-              ariaLabel="dna-loading"
-              wrapperStyle={{}}
-              wrapperClass="dna-wrapper"
+    <div className="min-h-screen flex items-center justify-center bg-gradient-to-br from-gray-900 via-gray-800 to-gray-900 px-4">
+
+      {/* Card */}
+      <div className="w-full max-w-md backdrop-blur-lg bg-white/10 border border-white/20 rounded-2xl shadow-2xl p-8">
+
+        {/* Heading */}
+        <h2 className="text-3xl font-bold text-center mb-6 bg-gradient-to-r from-pink-400 to-purple-500 text-transparent bg-clip-text">
+          Create Account 🚀
+        </h2>
+
+        <p className="text-center text-gray-400 mb-6">
+          Join <span className="text-pink-400">Abhishek Notebook</span>
+        </p>
+
+        {/* Form */}
+        <form onSubmit={handleSubmit} className="space-y-5">
+
+          {/* Name */}
+          <div>
+            <label className="text-gray-300 text-sm">Name</label>
+            <input
+              type="text"
+              name="name"
+              required
+              onChange={onChange}
+              className="w-full mt-1 p-3 rounded-lg bg-white/10 border border-gray-600 text-white focus:ring-2 focus:ring-pink-500 outline-none"
+              placeholder="Enter your name"
             />
-          ) : (
-            'Signup'
-          )}
-        </button>
-      </form>
+          </div>
+
+          {/* Email */}
+          <div>
+            <label className="text-gray-300 text-sm">Email</label>
+            <input
+              type="email"
+              name="email"
+              required
+              onChange={onChange}
+              className="w-full mt-1 p-3 rounded-lg bg-white/10 border border-gray-600 text-white focus:ring-2 focus:ring-purple-500 outline-none"
+              placeholder="Enter your email"
+            />
+            <p className="text-xs text-gray-500 mt-1">
+              We'll never share your email.
+            </p>
+          </div>
+
+          {/* Password */}
+          <div>
+            <label className="text-gray-300 text-sm">Password</label>
+            <input
+              type="password"
+              name="password"
+              minLength={5}
+              required
+              onChange={onChange}
+              className="w-full mt-1 p-3 rounded-lg bg-white/10 border border-gray-600 text-white focus:ring-2 focus:ring-pink-500 outline-none"
+              placeholder="Enter password"
+            />
+          </div>
+
+          {/* Confirm Password */}
+          <div>
+            <label className="text-gray-300 text-sm">Confirm Password</label>
+            <input
+              type="password"
+              name="cpassword"
+              minLength={5}
+              required
+              onChange={onChange}
+              className="w-full mt-1 p-3 rounded-lg bg-white/10 border border-gray-600 text-white focus:ring-2 focus:ring-purple-500 outline-none"
+              placeholder="Confirm password"
+            />
+          </div>
+
+          {/* Button */}
+          <button
+            type="submit"
+            disabled={loading}
+            className="w-full py-3 rounded-lg font-semibold flex items-center justify-center bg-gradient-to-r from-pink-500 to-purple-600 hover:from-pink-400 hover:to-purple-500 transition duration-300 disabled:opacity-50"
+          >
+            {loading ? (
+              <DNA height="40" width="40" ariaLabel="loading" />
+            ) : (
+              "Signup"
+            )}
+          </button>
+        </form>
+
+        {/* Footer */}
+        <p className="text-center text-gray-500 text-sm mt-6">
+          Already have an account?{" "}
+          <span
+            onClick={() => navigate("/login")}
+            className="text-pink-400 cursor-pointer hover:underline"
+          >
+            Login
+          </span>
+        </p>
+
+      </div>
     </div>
   );
 };

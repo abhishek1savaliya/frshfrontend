@@ -17,29 +17,38 @@ function App() {
     setAlert({
       msg: message,
       type: type,
-    })
+    });
+
     setTimeout(() => {
       setAlert(null);
     }, 2000);
-  }
+  };
+
   return (
-    <>
-      <NoteState>
-        <BrowserRouter>
+    <NoteState>
+      <BrowserRouter>
+
+        {/* ✅ FULL PAGE BACKGROUND */}
+        <div className="min-h-screen bg-gradient-to-br from-gray-900 via-gray-800 to-gray-900">
+
           <Navbar />
-          <Alert alert={alert} />
-          <div className="container">
-            <Routes>
-              <Route path="/" element={<Home showAlert={showAlert} />}></Route>
-              <Route path="/about" element={<About />}></Route>
-              <Route path="/login" element={<Login showAlert={showAlert} />}></Route>
-              <Route path="/signup" element={<Signup showAlert={showAlert} />}></Route>
-              <Route path="/profile" element={<Profile />}></Route>
-            </Routes>
-          </div>
-        </BrowserRouter>
-      </NoteState>
-    </>
+
+          {/* ✅ FIXED ALERT */}
+          <Alert alert={alert} setAlert={setAlert} />
+
+          {/* ❌ REMOVED container */}
+          <Routes>
+            <Route path="/" element={<Home showAlert={showAlert} />} />
+            <Route path="/about" element={<About />} />
+            <Route path="/login" element={<Login showAlert={showAlert} />} />
+            <Route path="/signup" element={<Signup showAlert={showAlert} />} />
+            <Route path="/profile" element={<Profile />} />
+          </Routes>
+
+        </div>
+
+      </BrowserRouter>
+    </NoteState>
   );
 }
 

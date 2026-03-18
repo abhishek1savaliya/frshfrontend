@@ -9,124 +9,158 @@ function Notes(props) {
   const context = useContext(noteContext);
   const { notes, getNotes, editNote } = context;
 
- useEffect(() => {
-  if (localStorage.getItem('token')) {
-    getNotes();
-  } else {
-    navigate('/login');
-  }
-}, [getNotes, navigate]); // ✅ FIXED
+  useEffect(() => {
+    if (localStorage.getItem("token")) {
+      getNotes();
+    } else {
+      navigate("/login");
+    }
+  }, [getNotes, navigate]);
 
-  const ref = useRef(null)
-  const refClose = useRef(null)
-  const [note, setNote] = useState({ id: "", etitle: "", edescription: "", etag: "" })
+  const ref = useRef(null);
+  const refClose = useRef(null);
+
+  const [note, setNote] = useState({
+    id: "",
+    etitle: "",
+    edescription: "",
+    etag: "",
+  });
 
   const updateNote = (currentNote) => {
     ref.current.click();
-    setNote({ id: currentNote._id, etitle: currentNote.title, edescription: currentNote.description, etag: currentNote.tag })
+    setNote({
+      id: currentNote._id,
+      etitle: currentNote.title,
+      edescription: currentNote.description,
+      etag: currentNote.tag,
+    });
   };
 
-  const handleClick = (e) => {
-    editNote(note.id, note.etitle, note.edescription, note.etag)
+  const handleClick = () => {
+    editNote(note.id, note.etitle, note.edescription, note.etag);
     refClose.current.click();
-    props.showAlert("Updated Successfully", "success")
-
+    props.showAlert("Updated Successfully", "success");
   };
 
   const onChange = (e) => {
     setNote({ ...note, [e.target.name]: e.target.value });
   };
 
-
   return (
     <>
       <AddNote showAlert={props.showAlert} />
-      <button type="button" ref={ref} className="btn btn-primary d-none" data-bs-toggle="modal" data-bs-target="#exampleModal">
-      </button>
 
-      <div className="modal fade" id="exampleModal" tabIndex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
-        <div className="modal-dialog ">
-          <div className="modal-content">
-            <div className="modal-header">
-              <h5 className="modal-title" id="exampleModalLabel">Edit Note</h5>
-              <button type="button" className="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-            </div>
-            <div className="modal-body">
+      {/* Hidden Button */}
+      <button
+        ref={ref}
+        type="button"
+        className="hidden"
+        data-bs-toggle="modal"
+        data-bs-target="#exampleModal"
+      ></button>
 
-              <form>
-                <div className="mb-2">
-                  <label htmlFor="etitle" className="block text-sm font-medium text-gray-700">
-                    Title
-                  </label>
-                  <input
-                    type="text"
-                    className="mt-1 p-2 w-full border rounded-md"
-                    value={note.etitle}
-                    id="etitle"
-                    minLength={5}
-                    required
-                    name="etitle"
-                    aria-describedby="emailHelp"
-                    onChange={onChange}
-                  />
-                </div>
-                <div className="mb-4">
-                  <label htmlFor="edescription" className="block text-sm font-medium text-gray-700">
-                    Description
-                  </label>
-                  <input
-                    type="text"
-                    minLength={5}
-                    required
-                    className="mt-1 p-2 w-full border rounded-md"
-                    value={note.edescription}
-                    id="edescription"
-                    name="edescription"
-                    onChange={onChange}
-                  />
-                </div>
-                <div className="mb-4">
-                  <label htmlFor="etag" className="block text-sm font-medium text-gray-700">
-                    Tag
-                  </label>
-                  <input
-                    type="text"
-                    className="mt-1 p-2 w-full border rounded-md"
-                    id="etag"
-                    value={note.etag}
-                    name="etag"
-                    onChange={onChange}
-                  />
-                </div>
-              </form>
+      {/* Modal */}
+      <div className="modal fade" id="exampleModal" tabIndex="-1">
+        <div className="modal-dialog modal-dialog-centered">
+          <div className="modal-content bg-gray-900 text-white rounded-2xl border border-gray-700">
 
-            </div>
-            <div className="flex justify-end space-x-4 p-2">
-              <button ref={refClose} type="button" className="px-4 py-2 bg-gray-300 hover:bg-gray-400 text-gray-800 rounded" data-bs-dismiss="modal">Close</button>
-              <button disabled={note.etitle.length < 5 || note.edescription.length < 5} type="button" className={`px-4 py-2 bg-blue-500 text-white rounded ${note.etitle.length < 5 || note.edescription.length < 5 ? 'opacity-50 cursor-not-allowed' : 'hover:bg-blue-600'}`} onClick={handleClick}>Update Note</button>
+            <div className="modal-header border-b border-gray-700">
+              <h5 className="text-xl font-semibold text-pink-400">
+                Edit Note
+              </h5>
+              <button
+                type="button"
+                className="text-gray-400"
+                data-bs-dismiss="modal"
+              >
+                ✖
+              </button>
             </div>
 
+            <div className="modal-body space-y-4">
+
+              <input
+                type="text"
+                name="etitle"
+                value={note.etitle}
+                onChange={onChange}
+                placeholder="Title"
+                className="w-full p-3 rounded-lg bg-white/10 border border-gray-600 focus:ring-2 focus:ring-pink-500 outline-none"
+              />
+
+              <input
+                type="text"
+                name="edescription"
+                value={note.edescription}
+                onChange={onChange}
+                placeholder="Description"
+                className="w-full p-3 rounded-lg bg-white/10 border border-gray-600 focus:ring-2 focus:ring-purple-500 outline-none"
+              />
+
+              <input
+                type="text"
+                name="etag"
+                value={note.etag}
+                onChange={onChange}
+                placeholder="Tag"
+                className="w-full p-3 rounded-lg bg-white/10 border border-gray-600 focus:ring-2 focus:ring-pink-500 outline-none"
+              />
+
+            </div>
+
+            <div className="flex justify-end gap-3 p-4 border-t border-gray-700">
+
+              <button
+                ref={refClose}
+                className="px-4 py-2 bg-gray-700 rounded-lg"
+                data-bs-dismiss="modal"
+              >
+                Close
+              </button>
+
+              <button
+                disabled={
+                  note.etitle.length < 5 ||
+                  note.edescription.length < 5
+                }
+                onClick={handleClick}
+                className="px-5 py-2 rounded-lg bg-gradient-to-r from-pink-500 to-purple-600 disabled:opacity-50"
+              >
+                Update
+              </button>
+
+            </div>
           </div>
         </div>
       </div>
-      <div className="container row my-3">
-        <h2>Your Notes</h2>
+
+      {/* Notes Section */}
+      <div className="min-h-screen bg-gradient-to-br from-gray-900 via-gray-800 to-gray-900 px-6 py-10">
+
+        <h2 className="text-3xl font-bold mb-8 text-pink-400">
+          Your Notes
+        </h2>
+
         {notes.length === 0 ? (
-          <div className="container text-danger display-6">
-            Empty notes!
+          <div className="text-gray-400 text-lg">
+            No notes yet... ✨
           </div>
         ) : (
-          notes.map((note, id) => (
-            <Noteitem
-              note={note}
-              key={note.id || id} 
-              updateNote={updateNote}
-              showAlert={props.showAlert}
-            />
-          ))
+          <div className="grid gap-6 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4">
+
+            {notes.map((note) => (
+              <Noteitem
+                key={note._id}
+                note={note}
+                updateNote={updateNote}
+                showAlert={props.showAlert}
+              />
+            ))}
+
+          </div>
         )}
       </div>
-
     </>
   );
 }

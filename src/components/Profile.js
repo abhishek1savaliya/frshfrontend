@@ -1,75 +1,159 @@
-import React from 'react';
-import { Link } from 'react-router-dom';
+import React from "react";
 
 const Profile = () => {
-    return (
-        <div className="bg-gray-100 min-h-screen flex items-center justify-center">
-            <div className="bg-white rounded-lg shadow-lg p-8 max-w-md w-full space-y-6">
+  return (
+    <div className="min-h-screen flex items-center justify-center bg-gradient-to-br from-gray-900 via-gray-800 to-gray-900 px-4">
 
-                <div className="flex justify-center">
-                    <img
-                        src="https://i.ibb.co/rvcNTg4/SAVE-20230812-213425.jpg"
-                        alt="Abhishek Savaliya"
-                        className="rounded-full w-[250px] h-[250px] transform transition-transform duration-300 hover:scale-125"
-                    />
-                </div>
+      <div className="w-full max-w-3xl backdrop-blur-lg bg-white/10 border border-white/20 rounded-2xl shadow-2xl p-8 space-y-8">
 
-                <div className="text-center text-blue-600 ransform transition-transform duration-300 hover:scale-125">
-                    <h1 className="text-2xl font-semibold">Abhishek Savaliya</h1>
-                    <p className="text-gray-600">Student | MERN Stack Developer Intern</p>
-                    <p className="text-pink-900">Surat</p>
-                </div>
+        {/* Profile Image */}
+        <div className="flex flex-col items-center text-center">
+          <img
+            src="https://i.ibb.co/rvcNTg4/SAVE-20230812-213425.jpg"
+            alt="Abhishek"
+            className="w-36 h-36 rounded-full border-4 border-pink-500 shadow-lg hover:scale-110 transition duration-300"
+          />
 
-                <div className="space-y-2 text-gray-700 ransform transition-transform duration-300 hover:scale-125">
-                    <p><strong>Email:</strong> <a href="mailto:abhisheksavaliya555@gmail.com" className="text-blue-500 hover:text-blue-700">abhisheksavaliya555@gmail.com</a></p>
-                    <p><strong>Phone:</strong> 8160059914</p>
-                    <p><strong>LinkedIn:</strong> <Link to="https://linkedin.com/in/abhishek-savaliya-22547b200" target="_blank" className="text-blue-500 hover:text-blue-700">Abhishek Savaliya</Link></p>
-                    <p><strong>Github:</strong> <Link to="https://github.com/abhishek1savaliya" target="_blank" className="text-blue-500 hover:text-blue-700">abhishek1savaliya</Link></p>
-                </div>
+          <h1 className="text-2xl font-bold mt-4 text-white">
+            Abhishek Savaliya
+          </h1>
 
-                {/* <div className="border-t pt-4 ransform transition-transform duration-300 hover:scale-125">
-                    <h2 className="text-xl font-semibold text-purple-600">Objective</h2>
-                    <p className="text-gray-700">Seeking for an internship/job opportunity with a company that offers a positive atmosphere to implement new ideas or technological skills for the betterment of the organization.</p>
-                </div> */}
+          <p className="text-gray-400">
+            MERN Stack Developer 🚀
+          </p>
 
-                <div className="border-t pt-4 ransform transition-transform duration-300 hover:scale-125">
-                    <h2 className="text-xl font-semibold text-green-600">Technical Skills</h2>
-                    <ul className="list-disc list-inside">
-                        <li>C / Java / Python (BASIC)</li>
-                        <li>Data Structures & Algorithms (BASIC)</li>
-                        <li>CSS / HTML / JavaScript</li>
-                        <li>Node.js / Express / MongoDB</li>
-                        <li>React.js / Next.js</li>
-                        <li>Version Control: Git</li>
-                    </ul>
-                </div>
-
-                {/* <div className="border-t pt-4 ransform transition-transform duration-300 hover:scale-125">
-                    <h2 className="text-xl font-semibold text-indigo-600">Soft Skills</h2>
-                    <ul className="list-disc list-inside">
-                        <li>Leadership</li>
-                        <li>Management Skill</li>
-                        <li>Problem Solving</li>
-                    </ul>
-                </div> */}
-
-                <div className="border-t pt-4 ransform transition-transform duration-300 hover:scale-125">
-                    <h2 className="text-xl font-semibold text-yellow-600">Academic Background</h2>
-                    <p className="text-gray-700">Shri Swami Atmanand Saraswati Institute Of Technology - (GTU)</p>
-                    <p className="text-gray-700">Bachelor Of Engineering, Computer Engineering | 2020 - Pursuing 4th Year</p>
-                </div>
-
-                <div className="border-t pt-4 ransform transition-transform duration-300 hover:scale-125">
-                    <h2 className="text-xl font-semibold text-red-600">Projects</h2>
-                    <ul className="list-disc list-inside space-y-2">
-                        <li><a href="https://abhishek1savaliya.github.io/react-textutil" target="_blank" rel="noopener noreferrer" className="text-blue-500 hover:text-blue-700">Word Counter</a></li>
-                        <li><a href="https://the-rickand-morty.vercel.app" target="_blank" rel="noopener noreferrer" className="text-blue-500 hover:text-blue-700">RickyandMorty</a></li>
-                        <li><a href="https://frshfrontend.vercel.app" target="_blank" rel="noopener noreferrer" className="text-blue-500 hover:text-blue-700">Note App</a></li>
-                    </ul>
-                </div>
-            </div>
+          <p className="text-pink-400 text-sm">📍 Surat</p>
         </div>
-    );
-}
+
+        {/* Contact Info */}
+        <div className="grid sm:grid-cols-2 gap-4 text-sm text-gray-300">
+
+          <p>
+            📧{" "}
+            <a
+              href="mailto:abhisheksavaliya555@gmail.com"
+              className="text-pink-400 hover:underline"
+            >
+              abhisheksavaliya555@gmail.com
+            </a>
+          </p>
+
+          <p>📞 8160059914</p>
+
+          <p>
+            🔗{" "}
+            <a
+              href="https://linkedin.com/in/abhishek-savaliya-22547b200"
+              target="_blank"
+              rel="noreferrer"
+              className="text-blue-400 hover:underline"
+            >
+              LinkedIn
+            </a>
+          </p>
+
+          <p>
+            💻{" "}
+            <a
+              href="https://github.com/abhishek1savaliya"
+              target="_blank"
+              rel="noreferrer"
+              className="text-green-400 hover:underline"
+            >
+              GitHub
+            </a>
+          </p>
+
+        </div>
+
+        {/* Skills */}
+        <div>
+          <h2 className="text-lg font-semibold text-pink-400 mb-3">
+            Technical Skills
+          </h2>
+
+          <div className="flex flex-wrap gap-2">
+            {[
+              "C",
+              "Java",
+              "Python",
+              "DSA",
+              "HTML",
+              "CSS",
+              "JavaScript",
+              "React",
+              "Node.js",
+              "MongoDB",
+              "Express",
+              "Next.js",
+              "Git",
+            ].map((skill, i) => (
+              <span
+                key={i}
+                className="px-3 py-1 text-xs rounded-full bg-white/10 border border-white/20 text-gray-300 hover:bg-pink-500/20 transition"
+              >
+                {skill}
+              </span>
+            ))}
+          </div>
+        </div>
+
+        {/* Education */}
+        <div>
+          <h2 className="text-lg font-semibold text-purple-400 mb-2">
+            Education
+          </h2>
+
+          <p className="text-gray-300">
+            🎓 Shri Swami Atmanand Saraswati Institute Of Technology (GTU)
+          </p>
+
+          <p className="text-gray-400 text-sm">
+            BE Computer Engineering (2020 - Present)
+          </p>
+        </div>
+
+        {/* Projects */}
+        <div>
+          <h2 className="text-lg font-semibold text-green-400 mb-3">
+            Projects
+          </h2>
+
+          <div className="space-y-2 text-sm">
+
+            <a
+              href="https://abhishek1savaliya.github.io/react-textutil"
+              target="_blank"
+              rel="noreferrer"
+              className="block p-3 rounded-lg bg-white/5 hover:bg-white/10 transition"
+            >
+              📄 Word Counter
+            </a>
+
+            <a
+              href="https://the-rickand-morty.vercel.app"
+              target="_blank"
+              rel="noreferrer"
+              className="block p-3 rounded-lg bg-white/5 hover:bg-white/10 transition"
+            >
+              👾 Rick & Morty App
+            </a>
+
+            <a
+              href="https://frshfrontend.vercel.app"
+              target="_blank"
+              rel="noreferrer"
+              className="block p-3 rounded-lg bg-white/5 hover:bg-white/10 transition"
+            >
+              📝 Note App
+            </a>
+
+          </div>
+        </div>
+
+      </div>
+    </div>
+  );
+};
 
 export default Profile;

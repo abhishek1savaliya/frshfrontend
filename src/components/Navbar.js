@@ -1,5 +1,5 @@
-import React, { useState } from 'react';
-import { Link, useLocation, useNavigate } from 'react-router-dom';
+import React, { useState } from "react";
+import { Link, useLocation, useNavigate } from "react-router-dom";
 
 function Navbar() {
   const location = useLocation();
@@ -7,74 +7,68 @@ function Navbar() {
   const [menuOpen, setMenuOpen] = useState(false);
 
   const handleLogout = () => {
-    localStorage.removeItem('token');
-    navigate('/login');
+    localStorage.removeItem("token");
+    navigate("/login");
   };
 
+  const navLink = (path) =>
+    `px-4 py-2 rounded-lg text-sm font-medium transition ${
+      location.pathname === path
+        ? "bg-white/20 text-white"
+        : "text-gray-300 hover:bg-white/10 hover:text-white"
+    }`;
+
   return (
-    <nav className="bg-gray-800">
+    <nav className="sticky top-0 z-50 backdrop-blur-lg bg-white/10 border-b border-white/20 shadow-md">
+
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
 
         <div className="flex items-center justify-between h-16">
 
           {/* Logo */}
-          <Link to="/" className="text-white text-xl font-semibold">
+          <Link
+            to="/"
+            className="text-2xl font-bold bg-gradient-to-r from-pink-400 to-purple-500 text-transparent bg-clip-text"
+          >
             aNotebook
           </Link>
 
           {/* Desktop Menu */}
-          {localStorage.getItem('token') && (
-            <div className="hidden md:flex space-x-4">
-              <Link
-                to="/"
-                className={`text-white px-3 py-2 rounded-md text-sm font-medium ${
-                  location.pathname === '/' ? 'bg-gray-900' : ''
-                }`}
-              >
+          {localStorage.getItem("token") && (
+            <div className="hidden md:flex space-x-2">
+              <Link to="/" className={navLink("/")}>
                 Home
               </Link>
 
-              <Link
-                to="/about"
-                className={`text-white px-3 py-2 rounded-md text-sm font-medium ${
-                  location.pathname === '/about' ? 'bg-gray-900' : ''
-                }`}
-              >
+              <Link to="/about" className={navLink("/about")}>
                 About
               </Link>
             </div>
           )}
 
-          {/* Right side buttons */}
+          {/* Right Side */}
           <div className="hidden md:flex items-center space-x-3">
 
-            <Link
-              to="/profile"
-              className={`text-white px-3 py-2 rounded-md text-sm border ${
-                location.pathname === '/profile' ? 'bg-gray-900' : ''
-              }`}
-            >
+            <Link to="/profile" className={navLink("/profile")}>
               Profile
             </Link>
 
-            {localStorage.getItem('token') ? (
+            {localStorage.getItem("token") ? (
               <button
                 onClick={handleLogout}
-                className="px-4 py-2 text-sm rounded-md text-white bg-indigo-600 hover:bg-indigo-700"
+                className="px-4 py-2 text-sm rounded-lg font-medium bg-gradient-to-r from-pink-500 to-purple-600 hover:from-pink-400 hover:to-purple-500 transition"
               >
                 Logout
               </button>
             ) : (
               <>
-                <Link
-                  to="/login"
-                  className="text-white px-3 py-2 rounded-md text-sm hover:bg-gray-700"
-                >
+                <Link to="/login" className={navLink("/login")}>
                   Login
                 </Link>
+
                 <Link
                   to="/signup"
-                  className="text-white px-3 py-2 rounded-md text-sm hover:bg-gray-700"
+                  className="px-4 py-2 rounded-lg text-sm font-medium bg-gradient-to-r from-pink-500 to-purple-600 hover:from-pink-400 hover:to-purple-500 transition"
                 >
                   Signup
                 </Link>
@@ -82,11 +76,11 @@ function Navbar() {
             )}
           </div>
 
-          {/* Mobile menu button */}
+          {/* Mobile Button */}
           <div className="md:hidden">
             <button
               onClick={() => setMenuOpen(!menuOpen)}
-              className="text-white p-2 rounded-md hover:bg-gray-700"
+              className="text-gray-300 hover:text-white text-2xl"
             >
               ☰
             </button>
@@ -96,52 +90,40 @@ function Navbar() {
 
       {/* Mobile Menu */}
       {menuOpen && (
-        <div className="md:hidden px-4 pb-3 space-y-2">
+        <div className="md:hidden px-4 pb-4 space-y-2 bg-white/5 backdrop-blur-lg border-t border-white/10">
 
-          {localStorage.getItem('token') && (
+          {localStorage.getItem("token") && (
             <>
-              <Link
-                to="/"
-                className="block text-white px-3 py-2 rounded-md hover:bg-gray-700"
-              >
+              <Link to="/" className={navLink("/")}>
                 Home
               </Link>
 
-              <Link
-                to="/about"
-                className="block text-white px-3 py-2 rounded-md hover:bg-gray-700"
-              >
+              <Link to="/about" className={navLink("/about")}>
                 About
               </Link>
             </>
           )}
 
-          <Link
-            to="/profile"
-            className="block text-white px-3 py-2 rounded-md hover:bg-gray-700"
-          >
+          <Link to="/profile" className={navLink("/profile")}>
             Profile
           </Link>
 
-          {localStorage.getItem('token') ? (
+          {localStorage.getItem("token") ? (
             <button
               onClick={handleLogout}
-              className="w-full text-left px-3 py-2 rounded-md text-white bg-indigo-600 hover:bg-indigo-700"
+              className="w-full text-left px-4 py-2 rounded-lg text-sm bg-gradient-to-r from-pink-500 to-purple-600"
             >
               Logout
             </button>
           ) : (
             <>
-              <Link
-                to="/login"
-                className="block text-white px-3 py-2 rounded-md hover:bg-gray-700"
-              >
+              <Link to="/login" className={navLink("/login")}>
                 Login
               </Link>
 
               <Link
                 to="/signup"
-                className="block text-white px-3 py-2 rounded-md hover:bg-gray-700"
+                className="block px-4 py-2 rounded-lg text-sm bg-gradient-to-r from-pink-500 to-purple-600"
               >
                 Signup
               </Link>
