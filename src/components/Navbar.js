@@ -6,57 +6,51 @@ function Navbar() {
   const navigate = useNavigate();
   const [menuOpen, setMenuOpen] = useState(false);
 
+  const isLoggedIn = !!localStorage.getItem("token");
+
   const handleLogout = () => {
     localStorage.removeItem("token");
     navigate("/login");
+    setMenuOpen(false);
   };
 
+  // Active link styling
   const navLink = (path) =>
-    `px-4 py-2 rounded-lg text-sm font-medium transition ${
+    `block px-4 py-2 rounded-lg text-sm font-medium transition ${
       location.pathname === path
-        ? "bg-white/20 text-white"
+        ? "bg-gradient-to-r from-pink-500 to-purple-600 text-white"
         : "text-gray-300 hover:bg-white/10 hover:text-white"
     }`;
 
   return (
-    <nav className="sticky top-0 z-50 backdrop-blur-lg bg-white/10 border-b border-white/20 shadow-md">
+    <nav className="sticky top-0 z-50 backdrop-blur-lg bg-white/10 border-b border-white/20">
 
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-
+      <div className="max-w-7xl mx-auto px-4">
         <div className="flex items-center justify-between h-16">
 
           {/* Logo */}
           <Link
             to="/"
-            className="text-2xl font-bold bg-gradient-to-r from-pink-400 to-purple-500 text-transparent bg-clip-text"
+            className="text-xl sm:text-2xl font-bold bg-gradient-to-r from-pink-400 to-purple-500 text-transparent bg-clip-text"
           >
             aNotebook
           </Link>
 
           {/* Desktop Menu */}
-          {localStorage.getItem("token") && (
-            <div className="hidden md:flex space-x-2">
-              <Link to="/" className={navLink("/")}>
-                Home
-              </Link>
-
-              <Link to="/about" className={navLink("/about")}>
-                About
-              </Link>
-            </div>
-          )}
-
-          {/* Right Side */}
           <div className="hidden md:flex items-center space-x-3">
 
-            <Link to="/profile" className={navLink("/profile")}>
-              Profile
-            </Link>
+            {isLoggedIn && (
+              <>
+                <Link to="/" className={navLink("/")}>Home</Link>
+                <Link to="/about" className={navLink("/about")}>About</Link>
+                <Link to="/profile" className={navLink("/profile")}>Profile</Link>
+              </>
+            )}
 
-            {localStorage.getItem("token") ? (
+            {isLoggedIn ? (
               <button
                 onClick={handleLogout}
-                className="px-4 py-2 text-sm rounded-lg font-medium bg-gradient-to-r from-pink-500 to-purple-600 hover:from-pink-400 hover:to-purple-500 transition"
+                className="px-4 py-2 rounded-lg text-sm font-medium bg-gradient-to-r from-pink-500 to-purple-600 hover:opacity-90 transition"
               >
                 Logout
               </button>
@@ -66,64 +60,76 @@ function Navbar() {
                   Login
                 </Link>
 
-                <Link
-                  to="/signup"
-                  className="px-4 py-2 rounded-lg text-sm font-medium bg-gradient-to-r from-pink-500 to-purple-600 hover:from-pink-400 hover:to-purple-500 transition"
-                >
+                <Link to="/signup" className={navLink("/signup")}>
                   Signup
                 </Link>
               </>
             )}
           </div>
 
-          {/* Mobile Button */}
-          <div className="md:hidden">
-            <button
-              onClick={() => setMenuOpen(!menuOpen)}
-              className="text-gray-300 hover:text-white text-2xl"
-            >
-              ☰
-            </button>
-          </div>
+          {/* Mobile Menu Button */}
+          <button
+            onClick={() => setMenuOpen(!menuOpen)}
+            className="md:hidden text-2xl text-gray-300 hover:text-white"
+          >
+            ☰
+          </button>
         </div>
       </div>
 
       {/* Mobile Menu */}
       {menuOpen && (
-        <div className="md:hidden px-4 pb-4 space-y-2 bg-white/5 backdrop-blur-lg border-t border-white/10">
+        <div className="md:hidden px-4 py-4 space-y-3 bg-black/40 backdrop-blur-lg border-t border-white/10">
 
-          {localStorage.getItem("token") && (
+          {isLoggedIn && (
             <>
-              <Link to="/" className={navLink("/")}>
+              <Link
+                to="/"
+                onClick={() => setMenuOpen(false)}
+                className={navLink("/")}
+              >
                 Home
               </Link>
 
-              <Link to="/about" className={navLink("/about")}>
+              <Link
+                to="/about"
+                onClick={() => setMenuOpen(false)}
+                className={navLink("/about")}
+              >
                 About
+              </Link>
+
+              <Link
+                to="/profile"
+                onClick={() => setMenuOpen(false)}
+                className={navLink("/profile")}
+              >
+                Profile
               </Link>
             </>
           )}
 
-          <Link to="/profile" className={navLink("/profile")}>
-            Profile
-          </Link>
-
-          {localStorage.getItem("token") ? (
+          {isLoggedIn ? (
             <button
               onClick={handleLogout}
-              className="w-full text-left px-4 py-2 rounded-lg text-sm bg-gradient-to-r from-pink-500 to-purple-600"
+              className="w-full px-4 py-2 rounded-lg text-sm font-medium bg-gradient-to-r from-pink-500 to-purple-600"
             >
               Logout
             </button>
           ) : (
             <>
-              <Link to="/login" className={navLink("/login")}>
+              <Link
+                to="/login"
+                onClick={() => setMenuOpen(false)}
+                className={navLink("/login")}
+              >
                 Login
               </Link>
 
               <Link
                 to="/signup"
-                className="block px-4 py-2 rounded-lg text-sm bg-gradient-to-r from-pink-500 to-purple-600"
+                onClick={() => setMenuOpen(false)}
+                className={navLink("/signup")}
               >
                 Signup
               </Link>
