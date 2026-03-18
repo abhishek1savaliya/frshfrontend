@@ -5,63 +5,86 @@ const NoteState = (props) => {
   const host = "https://anotebookbackend.onrender.com";
   const [notes, setNotes] = useState([]);
 
+  // ✅ Get all notes
   const getNotes = async () => {
-  
-    const response = await fetch(`${host}/api/notes/fetchallnotes`, {
-      method: "GET",
-      headers: {
-        "Content-Type": "application/json",
-        "auth-token": localStorage.getItem('token'),
-      },
-    });
-    const json = await response.json();
-    setNotes(json);
+    try {
+      const response = await fetch(`${host}/api/notes/fetchallnotes`, {
+        method: "GET",
+        headers: {
+          "Content-Type": "application/json",
+          "auth-token": localStorage.getItem("token"),
+        },
+      });
+
+      const json = await response.json();
+      setNotes(json);
+    } catch (error) {
+      console.error("Error fetching notes:", error);
+    }
   };
 
-
-  //add a Note
+  // ✅ Add a Note
   const addNote = async (title, description, tag) => {
-    const response = await fetch(`${host}/api/notes/addnote`, {
-      method: "POST",
-      headers: {
-        "Content-Type": "application/json",
-        "auth-token": localStorage.getItem('token'),
-      },
-      body: JSON.stringify({ title, description, tag }),
-    });
-    const note = response.json();
-    setNotes(notes.concat(note));
-    getNotes();
+    try {
+      const response = await fetch(`${host}/api/notes/addnote`, {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+          "auth-token": localStorage.getItem("token"),
+        },
+        body: JSON.stringify({ title, description, tag }),
+      });
+
+      const note = await response.json(); // 🔥 FIXED (added await)
+
+      // ✅ Use functional update to avoid stale state
+      setNotes((prevNotes) => prevNotes.concat(note));
+    } catch (error) {
+      console.error("Error adding note:", error);
+    }
   };
 
-  //Delete a Note
+  // ✅ Delete a Note
   const deleteNote = async (id) => {
-    const response = await fetch(`${host}/api/notes/deletenote/${id}`, {
-      method: "DELETE",
-      headers: {
-        "Content-Type": "application/json",
-        "auth-token": localStorage.getItem('token'),
-      },
-    });
-    const json = await response.json();
+    try {
+      await fetch(`${host}/api/notes/deletenote/${id}`, {
+        method: "DELETE",
+        headers: {
+          "Content-Type": "application/json",
+          "auth-token": localStorage.getItem("token"),
+        },
+      });
 
-    const newNotes = notes.filter((note) => {
-      return note._id !== id;
-    });
-    setNotes(newNotes);
+      // ✅ Update UI immediately
+      setNotes((prevNotes) => prevNotes.filter((note) => note._id !== id));
+    } catch (error) {
+      console.error("Error deleting note:", error);
+    }
   };
-  //Edit a Note
-  const editNote = async (id, title, description, tag) => {
-    const response = await fetch(`${host}/api/notes/updatenote/${id}`, {
-      method: "PUT",
-      headers: {
-        "Content-Type": "application/json",
-        "auth-token": localStorage.getItem('token'),
-      },
-      body: JSON.stringify({ title, description, tag }),
-    });
 
-    getNotes();
+  // ✅ Edit a Note
+  const editNote = async (id, title, description, tag) => {
+    try {
+      await fetch(`${host}/api/notes/updatenote/${id}`, {
+        method: "PUT",
+        headers: {
+          "Content-Type": "application/json",
+          "auth-token": localStorage.getItem("token"),
+        },
+        body: JSON.stringify({ title, description, tag }),
+      });
+
+      // ✅ Update UI without refetching (better UX)
+      setNotes((prevNotes) =>
+        prevNotes.map((note) =>
+          note._id === id
+            ? { ...note, title, description, tag }
+            : note
+        )
+      );
+    } catch (error) {
+      console.error("Error editing note:", error);
+    }
   };
 
   return (

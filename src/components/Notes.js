@@ -8,16 +8,14 @@ function Notes(props) {
   let navigate = useNavigate();
   const context = useContext(noteContext);
   const { notes, getNotes, editNote } = context;
-  useEffect(() => {
-    if (localStorage.getItem('token')) {
-      getNotes();
-    }
-    else {
-      navigate('/login')
-    }
 
-  }, [])
-
+ useEffect(() => {
+  if (localStorage.getItem('token')) {
+    getNotes();
+  } else {
+    navigate('/login');
+  }
+}, [getNotes, navigate]); // ✅ FIXED
 
   const ref = useRef(null)
   const refClose = useRef(null)

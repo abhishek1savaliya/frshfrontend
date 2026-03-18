@@ -3,42 +3,61 @@ import { DNA } from 'react-loader-spinner';
 import { useNavigate } from "react-router-dom";
 
 const Signup = (props) => {
-  const [credentials, setCredentials] = useState({ name: "", email: "", password: "", cpassword: "" });
+  const [credentials, setCredentials] = useState({
+    name: "",
+    email: "",
+    password: "",
+    cpassword: ""
+  });
+
   const [loading, setLoading] = useState(false);
   const navigate = useNavigate();
 
-  const token = localStorage.getItem('token');
-
+  // ✅ Redirect if already logged in
   useEffect(() => {
-    if (token) {
+    if (localStorage.getItem('token')) {
       navigate('/');
     }
-  }, [])
+  }, [navigate]); // ✅ FIXED
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-    setLoading(true)
 
-    const { name, email, password } = credentials;
+    // ✅ Password validation
+    if (credentials.password !== credentials.cpassword) {
+      props.showAlert("Passwords do not match", "danger");
+      return;
+    }
 
-    const response = await fetch(`https://anotebookbackend.onrender.com/api/auth/createuser`, {
-      method: "POST",
-      headers: {
-        "Content-Type": "application/json",
-      },
-      body: JSON.stringify({ name, email, password }),
-    });
+    setLoading(true);
 
-    const json = await response.json();
+    try {
+      const { name, email, password } = credentials;
 
-    if (json.success) {
-      localStorage.setItem('token', json.authToken);
-      setLoading(false)
-      props.showAlert("Account Created Successfully", "success");
-      navigate("/login");
-    } else {
-      props.showAlert("Invalid Credentials", "danger");
-      setLoading(false)
+      const response = await fetch(
+        `https://anotebookbackend.onrender.com/api/auth/createuser`,
+        {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify({ name, email, password }),
+        }
+      );
+
+      const json = await response.json();
+
+      if (json.success) {
+        localStorage.setItem('token', json.authToken);
+        props.showAlert("Account Created Successfully", "success");
+        navigate("/login");
+      } else {
+        props.showAlert("Invalid Credentials", "danger");
+      }
+    } catch (error) {
+      props.showAlert("Error occurred during signup", "danger");
+    } finally {
+      setLoading(false); // ✅ cleaner
     }
   };
 
